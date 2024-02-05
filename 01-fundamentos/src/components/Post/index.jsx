@@ -26,6 +26,7 @@ export const Post = ({ author, content, publishedAt }) => {
     })
 
     const handleNewCommentChange = () => {
+        event.target.setCustomValidity('')
         setNewCommentText(event.target.value)
     }
 
@@ -35,6 +36,20 @@ export const Post = ({ author, content, publishedAt }) => {
         setComments([...comments, newCommentText])
         setNewCommentText('')
     }
+
+    const handleNewCommentInvalid = () => {
+        event.target.setCustomValidity('Esse campo e obrigatorio!')
+    }
+
+    const deleteComment = (commentToDelete) => {
+        const commentsWithoutDeleteOne = comments.filter(comment => {
+            return comment !== commentToDelete
+        })
+
+        setComments(commentsWithoutDeleteOne)
+    }
+
+    const isNewCommentEmpty = newCommentText.length === 0
 
     return (
         <article className={styles.post}>
@@ -70,16 +85,24 @@ export const Post = ({ author, content, publishedAt }) => {
                     placeholder='Deixe um comentario'
                     value={newCommentText}
                     onChange={handleNewCommentChange}
+                    onInvalid={handleNewCommentInvalid}
+                    required
                 />
 
                 <footer>
-                    <button type='submit'>Publicar</button>
+                    <button type='submit' disabled={isNewCommentEmpty}>Publicar</button>
                 </footer>
             </form>
 
             <div className={styles.commentList}>
                 {comments.map(comment => {
-                    return <Comment key={comment} content={comment} />
+                    return (
+                        <Comment 
+                            key={comment} 
+                            content={comment} 
+                            onDeleteComment={deleteComment} 
+                        />
+                    )
                 })}
             </div>
         </article>
