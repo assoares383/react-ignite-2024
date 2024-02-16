@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 import { HandPalm, Play } from 'phosphor-react'
 
-import { CountDown } from './Countdown/index'
-import { NewCycleForm } from './NewCycleForm/index'
+import { CountDown } from './components/Countdown'
+import { NewCycleForm } from './components/NewCycleForm'
 
 import { HomeContainer, StartCountButton, StopCountButton } from './styles'
 
@@ -16,30 +16,21 @@ interface Cycle {
   finishedDate?: Date
 }
 
+interface CyclesContextType {
+  activeCycle: Cycle | undefined
+  activeCycleId: string | null
+  markCurrentCycleAsFinished: () => void
+}
+
+export const CyclesContext = createContext({} as CyclesContextType)
+
 export const Home = () => {
   const [cycles, setCycles] = useState<Cycle[]>([])
   const [activeCycleId, setActiveCycleId] = useState<string | null>(null)
 
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)
 
-  function handleCreateNewCycle(data: NewCycleFormData) {
-    const id = String(new Date().getTime())
-
-    const newCycle: Cycle = {
-      id,
-      task: data.task,
-      minutesAmount: data.minutesAmount,
-      startDate: new Date(),
-    }
-
-    setCycles((state) => [...state, newCycle])
-    setActiveCycleId(id)
-    setAmountSecondsPassed(0)
-
-    reset()
-  }
-
-  function handleInterruptCycle() {
+  function markCurrentCycleAsFinished() {
     setCycles((state) =>
       state.map((cycle) => {
         if (cycle.id === activeCycleId) {
@@ -49,32 +40,49 @@ export const Home = () => {
         }
       }),
     )
+  }
+
+  // function handleCreateNewCycle(data: NewCycleFormData) {
+  //   const id = String(new Date().getTime())
+
+  //   const newCycle: Cycle = {
+  //     id,
+  //     task: data.task,
+  //     minutesAmount: data.minutesAmount,
+  //     startDate: new Date(),
+  //   }
+
+  //   setCycles((state) => [...state, newCycle])
+  //   setActiveCycleId(id)
+  //   setAmountSecondsPassed(0)
+
+  //   reset()
+  // }
+
+  function handleInterruptCycle() {
+    // setCycles((state) =>
+    //   state.map((cycle) => {
+    //     if (cycle.id === activeCycleId) {
+    //       return { ...cycle, interruptedDate: new Date() }
+    //     } else {
+    //       return cycle
+    //     }
+    //   }),
+    // )
 
     setActiveCycleId(null)
   }
 
-  const currentSeconds = activeCycle ? totalSeconds - amountSecondsPassed : 0
-
-  const minutesAmount = Math.ceil(currentSeconds / 60)
-  const secondsAmount = currentSeconds % 60
-
-  const minutes = String(minutesAmount).padStart(2, '0')
-  const seconds = String(secondsAmount).padStart(2, '0')
-
-  useEffect(() => {
-    if (activeCycle) {
-      document.title = `${minutes}:${seconds}`
-    }
-  }, [minutes, seconds, activeCycle])
-
-  const task = watch('task')
-  const isSubmitDisabled = !task
+  // const task = watch('task')
+  // const isSubmitDisabled = !task
 
   return (
     <HomeContainer>
-      <form onSubmit={handleSubmit(handleCreateNewCycle)}>
-        <NewCycleForm />
-        <CountDown />
+      <form /* onSubmit={handleSubmit(handleCreateNewCycle)} */>
+        <CyclesContext value={{ activeCycle, activeCycleId }}>
+          {/* <NewCycleForm /> */}
+          <CountDown />
+        </CyclesContext>
 
         {activeCycle ? (
           <StopCountButton type="button" onClick={handleInterruptCycle}>
@@ -82,7 +90,7 @@ export const Home = () => {
             Interromper
           </StopCountButton>
         ) : (
-          <StartCountButton type="submit" disabled={isSubmitDisabled}>
+          <StartCountButton type="submit" /* disabled={isSubmitDisabled} */>
             <Play size={24} />
             Comecar
           </StartCountButton>
