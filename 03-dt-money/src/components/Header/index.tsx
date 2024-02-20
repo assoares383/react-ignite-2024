@@ -2,7 +2,6 @@ import logoImg from '../../assets/icons/ignite-logo.svg'
 import * as Dialog from '@radix-ui/react-dialog';
 
 import { HeaderContainer, HeaderContent, NewTransactionButton } from './styles';
-import { Portal } from '../../../node_modules/@radix-ui/react-dialog/dist/index.d';
 
 export const Header = () => {
   return (
