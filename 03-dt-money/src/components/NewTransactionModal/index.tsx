@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { ArrowCircleUp, ArrowCircleDown, X } from 'phosphor-react'
 import * as Dialog from '@radix-ui/react-dialog';
 import * as z from 'zod';
@@ -24,12 +24,16 @@ import {
 
 export const NewTransactionModal = () => {
   const {
+    control,
     handleSubmit,
     register,
     formState:
       { isSubmitting }
   } = useForm<newTransactionsFormInputs>({
     resolver: zodResolver(newTransactionsFormSchema),
+    defaultValues: {
+      type: 'income'
+    }
   })
 
   function handleCreateNewTransaction(data: newTransactionsFormInputs) {
@@ -66,16 +70,27 @@ export const NewTransactionModal = () => {
             {...register('category')}
           />
 
-          <TransactionType>
-            <TransactionTypeButton variant='income' value='income'>
-              <ArrowCircleUp size={24} />
-              Entrada
-            </TransactionTypeButton>
-            <TransactionTypeButton variant='outcome' value='outcome'>
-            <ArrowCircleDown size={24} />
-              Saida
-            </TransactionTypeButton>
-          </TransactionType>
+          <Controller
+            control={control}
+            name="type"
+            render={({ field }) => {
+              return (
+                <TransactionType
+                  onValueChange={field.onChange}
+                  value={field.value}
+                >
+                  <TransactionTypeButton variant='income' value='income'>
+                    <ArrowCircleUp size={24} />
+                    Entrada
+                  </TransactionTypeButton>
+                  <TransactionTypeButton variant='outcome' value='outcome'>
+                  <ArrowCircleDown size={24} />
+                    Saida
+                  </TransactionTypeButton>
+                </TransactionType>
+              )
+            }}
+          />
 
           <button type='submit' disabled={isSubmitting}>Cadastrar</button>
         </form>
