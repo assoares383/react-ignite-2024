@@ -70,8 +70,6 @@ const Home = () => {
 
           <img src="/images/hero.svg" alt="Café do Coffee Delivery" />
         </HeroContent>
-
-        <img src="/images/hero-bg.svg" id="hero-bg" alt="" />
       </Hero>
 
       <CoffeeList>

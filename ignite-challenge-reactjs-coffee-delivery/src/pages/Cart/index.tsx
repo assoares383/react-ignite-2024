@@ -1,7 +1,7 @@
-import { Fragment } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { Fragment } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Bank,
   CreditCard,
@@ -9,13 +9,13 @@ import {
   MapPin,
   Money,
   Trash,
-} from '@phosphor-icons/react'
+} from "@phosphor-icons/react";
 
-import { coffees } from '../../../mock.json'
-import { useCart } from '../../hooks/useCart'
-import { QuantityInput } from '../../components/Form/QuantityInput'
-import { TextInput } from '../../components/Form/TextInput'
-import { Radio } from '../../components/Form/Radio'
+import { coffees } from "../../../mock.json";
+import { useCart } from "../../hooks/useCart";
+import { QuantityInput } from "../../components/Form/QuantityInput";
+import { TextInput } from "../../components/Form/TextInput";
+import { Radio } from "../../components/Form/Radio";
 import {
   AddressContainer,
   AddressForm,
@@ -31,18 +31,18 @@ import {
   PaymentErrorMessage,
   PaymentHeading,
   PaymentOptions,
-} from './styles'
+} from "./styles";
 
 type FormInputs = {
-  cep: number
-  street: string
-  number: string
-  fullAddress: string
-  neighborhood: string
-  city: string
-  state: string
-  paymentMethod: 'credit' | 'debit' | 'cash'
-}
+  cep: number;
+  street: string;
+  number: string;
+  fullAddress: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  paymentMethod: "credit" | "debit" | "cash";
+};
 
 const newOrder = z.object({
   cep: z.number({ invalid_type_error: 'Informe o CEP' }),
@@ -59,7 +59,7 @@ const newOrder = z.object({
 
 export type OrderInfo = z.infer<typeof newOrder>
 
-const shippingPrice = 3.5
+const shippingPrice = 3.5;
 
 export function Cart() {
   const {
@@ -68,24 +68,24 @@ export function Cart() {
     incrementItemQuantity,
     decrementItemQuantity,
     removeItem,
-  } = useCart()
+  } = useCart();
 
   const coffeesInCart = cart.map((item) => {
-    const coffeeInfo = coffees.find((coffee) => coffee.id === item.id)
+    const coffeeInfo = coffees.find((coffee) => coffee.id === item.id);
 
     if (!coffeeInfo) {
-      throw new Error('Invalid coffee.')
+      throw new Error("Invalid coffee.");
     }
 
     return {
       ...coffeeInfo,
       quantity: item.quantity,
-    }
-  })
+    };
+  });
 
   const totalItemsPrice = coffeesInCart.reduce((previousValue, currentItem) => {
-    return (previousValue += currentItem.price * currentItem.quantity)
-  }, 0)
+    return (previousValue += currentItem.price * currentItem.quantity);
+  }, 0);
 
   const {
     register,
@@ -94,29 +94,28 @@ export function Cart() {
     formState: { errors },
   } = useForm<FormInputs>({
     resolver: zodResolver(newOrder),
-  })
+  });
 
-  const selectedPaymentMethod = watch('paymentMethod')
+  const selectedPaymentMethod = watch("paymentMethod");
 
   function handleItemIncrement(itemId: string) {
-    incrementItemQuantity(itemId)
+    incrementItemQuantity(itemId);
   }
 
   function handleItemDecrement(itemId: string) {
-    decrementItemQuantity(itemId)
+    decrementItemQuantity(itemId);
   }
 
   function handleItemRemove(itemId: string) {
-    removeItem(itemId)
+    removeItem(itemId);
   }
 
   const handleOrderCheckout: SubmitHandler<FormInputs> = (data) => {
-    if (cart.length === 0) {
-      return alert('É preciso ter pelo menos um item no carrinho')
-    }
+    if (cart.length === 0)
+      alert("É preciso ter pelo menos um item no carrinho");
 
-    checkout(data)
-  }
+    checkout(data);
+  };
 
   return (
     <Container>
@@ -139,53 +138,53 @@ export function Cart() {
               <TextInput
                 placeholder="CEP"
                 type="number"
-                containerProps={{ style: { gridArea: 'cep' } }}
+                containerProps={{ style: { gridArea: "cep" } }}
                 error={errors.cep}
-                {...register('cep', { valueAsNumber: true })}
+                {...register("cep", { valueAsNumber: true })}
               />
 
               <TextInput
                 placeholder="Rua"
-                containerProps={{ style: { gridArea: 'street' } }}
+                containerProps={{ style: { gridArea: "street" } }}
                 error={errors.street}
-                {...register('street')}
+                {...register("street")}
               />
 
               <TextInput
                 placeholder="Número"
-                containerProps={{ style: { gridArea: 'number' } }}
+                containerProps={{ style: { gridArea: "number" } }}
                 error={errors.number}
-                {...register('number')}
+                {...register("number")}
               />
 
               <TextInput
                 placeholder="Complemento"
                 optional
-                containerProps={{ style: { gridArea: 'fullAddress' } }}
+                containerProps={{ style: { gridArea: "fullAddress" } }}
                 error={errors.fullAddress}
-                {...register('fullAddress')}
+                {...register("fullAddress")}
               />
 
               <TextInput
                 placeholder="Bairro"
-                containerProps={{ style: { gridArea: 'neighborhood' } }}
+                containerProps={{ style: { gridArea: "neighborhood" } }}
                 error={errors.neighborhood}
-                {...register('neighborhood')}
+                {...register("neighborhood")}
               />
 
               <TextInput
                 placeholder="Cidade"
-                containerProps={{ style: { gridArea: 'city' } }}
+                containerProps={{ style: { gridArea: "city" } }}
                 error={errors.city}
-                {...register('city')}
+                {...register("city")}
               />
 
               <TextInput
                 placeholder="UF"
                 maxLength={2}
-                containerProps={{ style: { gridArea: 'state' } }}
+                containerProps={{ style: { gridArea: "state" } }}
                 error={errors.state}
-                {...register('state')}
+                {...register("state")}
               />
             </AddressForm>
           </AddressContainer>
@@ -207,8 +206,8 @@ export function Cart() {
             <PaymentOptions>
               <div>
                 <Radio
-                  isSelected={selectedPaymentMethod === 'credit'}
-                  {...register('paymentMethod')}
+                  isSelected={selectedPaymentMethod === "credit"}
+                  {...register("paymentMethod")}
                   value="credit"
                 >
                   <CreditCard size={16} />
@@ -216,8 +215,8 @@ export function Cart() {
                 </Radio>
 
                 <Radio
-                  isSelected={selectedPaymentMethod === 'debit'}
-                  {...register('paymentMethod')}
+                  isSelected={selectedPaymentMethod === "debit"}
+                  {...register("paymentMethod")}
                   value="debit"
                 >
                   <Bank size={16} />
@@ -225,8 +224,8 @@ export function Cart() {
                 </Radio>
 
                 <Radio
-                  isSelected={selectedPaymentMethod === 'cash'}
-                  {...register('paymentMethod')}
+                  isSelected={selectedPaymentMethod === "cash"}
+                  {...register("paymentMethod")}
                   value="cash"
                 >
                   <Money size={16} />
@@ -283,9 +282,9 @@ export function Cart() {
             <div>
               <span>Total de itens</span>
               <span>
-                {new Intl.NumberFormat('pt-br', {
-                  currency: 'BRL',
-                  style: 'currency',
+                {new Intl.NumberFormat("pt-br", {
+                  currency: "BRL",
+                  style: "currency",
                 }).format(totalItemsPrice)}
               </span>
             </div>
@@ -293,9 +292,9 @@ export function Cart() {
             <div>
               <span>Entrega</span>
               <span>
-                {new Intl.NumberFormat('pt-br', {
-                  currency: 'BRL',
-                  style: 'currency',
+                {new Intl.NumberFormat("pt-br", {
+                  currency: "BRL",
+                  style: "currency",
                 }).format(shippingPrice)}
               </span>
             </div>
@@ -303,9 +302,9 @@ export function Cart() {
             <div>
               <span>Total</span>
               <span>
-                {new Intl.NumberFormat('pt-br', {
-                  currency: 'BRL',
-                  style: 'currency',
+                {new Intl.NumberFormat("pt-br", {
+                  currency: "BRL",
+                  style: "currency",
                 }).format(totalItemsPrice + shippingPrice)}
               </span>
             </div>
@@ -317,5 +316,5 @@ export function Cart() {
         </CartTotal>
       </InfoContainer>
     </Container>
-  )
+  );
 }

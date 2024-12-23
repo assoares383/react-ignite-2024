@@ -7,7 +7,7 @@ export enum ActionTypes {
   REMOVE_ITEM = 'REMOVE_ITEM',
   INCREMENT_ITEM_QUANTITY = 'INCREMENT_ITEM_QUANTITY',
   DECREMENT_ITEM_QUANTITY = 'DECREMENT_ITEM_QUANTITY',
-  CHECKOUT_CART = 'CHECKOUT_CART'
+  CHECKOUT_CART = 'CHECKOUT_CART',
 }
 
 export type Actions =
@@ -19,8 +19,8 @@ export type Actions =
   }
   | {
     type:
-    | ActionTypes.DECREMENT_ITEM_QUANTITY
     | ActionTypes.INCREMENT_ITEM_QUANTITY
+    | ActionTypes.DECREMENT_ITEM_QUANTITY
     | ActionTypes.REMOVE_ITEM
     payload: {
       itemId: Item['id']
@@ -29,8 +29,8 @@ export type Actions =
   | {
     type: ActionTypes.CHECKOUT_CART
     payload: {
-      order: OrderInfo,
-      callback: NavigateFunction
+      order: OrderInfo
+      navigate: NavigateFunction
     }
   }
 
@@ -72,13 +72,13 @@ const decrementItemQuantityAction = (itemId: Item['id']) => {
 
 const checkoutCartAction = (
   order: OrderInfo,
-  callback: NavigateFunction,
+  navigate: NavigateFunction
 ) => {
   return {
     type: ActionTypes.CHECKOUT_CART,
     payload: {
       order,
-      callback,
+      navigate,
     },
   } satisfies Actions
 }

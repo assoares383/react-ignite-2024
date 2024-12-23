@@ -1,4 +1,5 @@
-import { Minus, Plus } from "@phosphor-icons/react"
+import { Minus, Plus } from '@phosphor-icons/react'
+
 import { Container } from './styles'
 
 type Props = {
@@ -7,23 +8,18 @@ type Props = {
   decrementQuantity: () => void
 }
 
-const QuantityInput = ({
-  quantity,
-  incrementQuantity,
-  decrementQuantity
-}: Props) => {
+const QuantityInput = ({ quantity, incrementQuantity, decrementQuantity }: Props) => {
   return (
     <Container>
       <button onClick={decrementQuantity}>
-        <Minus size={14} />
+        <Minus />
       </button>
-      <span>{ quantity }</span>
+      <span>{quantity}</span>
       <button onClick={incrementQuantity}>
-        <Plus size={14} />
+        <Plus />
       </button>
     </Container>
   )
 }
-
 
 export { QuantityInput }

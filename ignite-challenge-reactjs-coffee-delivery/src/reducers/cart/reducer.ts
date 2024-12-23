@@ -17,7 +17,7 @@ interface CartState {
   orders: Order[]
 }
 
-export function cartReducer(state: CartState, action: Actions) {
+const cartReducer = (state: CartState, action: Actions) => {
   switch (action.type) {
     case ActionTypes.ADD_ITEM:
       return produce(state, (draft) => {
@@ -72,10 +72,13 @@ export function cartReducer(state: CartState, action: Actions) {
         draft.orders.push(newOrder)
         draft.cart = []
 
-        action.payload.callback(`/order/${newOrder.id}/success`)
+        action.payload.navigate(`/order/${newOrder.id}/success`)
       })
 
     default:
       return state
   }
 }
+
+
+export { cartReducer }

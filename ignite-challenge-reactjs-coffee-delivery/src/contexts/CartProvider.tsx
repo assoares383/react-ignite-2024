@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useEffect, useReducer } from "react";
+import { createContext, ReactNode, useEffect, useReducer } from 'react'
 
 import {
   addItemAction,
@@ -6,31 +6,32 @@ import {
   decrementItemQuantityAction,
   incrementItemQuantityAction,
   removeItemAction,
-} from "../reducers/cart/actions";
-import { cartReducer, Item, Order } from "../reducers/cart/reducer";
-import { OrderInfo } from "../pages/Cart";
-import { useNavigate } from "react-router-dom";
+} from '../reducers/cart/actions'
+import { cartReducer, Item, Order } from '../reducers/cart/reducer'
+import { OrderInfo } from '../pages/Cart'
+import { useNavigate } from 'react-router-dom'
 
 interface CartContextType {
-  cart: Item[];
-  orders: Order[];
-  addItem: (item: Item) => void;
-  removeItem: (itemId: Item["id"]) => void;
-  decrementItemQuantity: (itemId: Item["id"]) => void;
-  incrementItemQuantity: (itemId: Item["id"]) => void;
-  checkout: (order: OrderInfo) => void;
+  cart: Item[]
+  orders: Order[]
+  addItem: (item: Item) => void
+  removeItem: (itemId: Item['id']) => void
+  decrementItemQuantity: (itemId: Item['id']) => void
+  incrementItemQuantity: (itemId: Item['id']) => void
+  checkout: (order: OrderInfo) => void
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const CartContext = createContext({} as CartContextType);
+export const CartContext = createContext({} as CartContextType)
 
 interface CartContextProviderProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
-const CartContextProvider = ({ children }: CartContextProviderProps) => {
+export function CartContextProvider({ children }: CartContextProviderProps) {
   const [cartState, dispatch] = useReducer(
-    cartReducer, {
+    cartReducer,
+    {
       cart: [],
       orders: [],
     },
@@ -44,39 +45,35 @@ const CartContextProvider = ({ children }: CartContextProviderProps) => {
       }
 
       return cartState
-    }
-  );
-
+    },
+  )
   const navigate = useNavigate()
 
   const { cart, orders } = cartState
 
-  const addItem = (item: Item) => {
+  function addItem(item: Item) {
     dispatch(addItemAction(item))
   }
 
-  const removeItem = (itemId: Item['id']) => {
+  function removeItem(itemId: Item['id']) {
     dispatch(removeItemAction(itemId))
   }
 
-  const checkout = (order: OrderInfo) => {
+  function checkout(order: OrderInfo) {
     dispatch(checkoutCartAction(order, navigate))
   }
 
-  const incrementItemQuantity = (itemId: Item['id']) => {
+  function incrementItemQuantity(itemId: Item['id']) {
     dispatch(incrementItemQuantityAction(itemId))
   }
 
-  const decrementItemQuantity = (itemId: Item['id']) => {
+  function decrementItemQuantity(itemId: Item['id']) {
     dispatch(decrementItemQuantityAction(itemId))
   }
 
   useEffect(() => {
-    if (cartState) {
-      const stateJSON = JSON.stringify(cartState)
-
-      localStorage.setItem('@coffee-delivery:car-state-1.0.0', stateJSON)
-    }
+    const stateJSON = JSON.stringify(cartState)
+    localStorage.setItem('@coffee-delivery:cart-state-1.0.0', stateJSON)
   }, [cartState])
 
   return (
@@ -88,12 +85,10 @@ const CartContextProvider = ({ children }: CartContextProviderProps) => {
         decrementItemQuantity,
         incrementItemQuantity,
         removeItem,
-        checkout
+        checkout,
       }}
     >
-      { children }
+      {children}
     </CartContext.Provider>
   )
-};
-
-export { CartContextProvider }
+}

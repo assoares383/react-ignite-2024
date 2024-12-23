@@ -1,11 +1,12 @@
-import { MapPin, ShoppingCart } from "@phosphor-icons/react";
-import { Link } from "react-router-dom";
+import { MapPin, ShoppingCart } from "@phosphor-icons/react"
+import { Link } from 'react-router-dom'
 
-import { useCart } from "../../hooks/useCart";
-import { Aside, Container } from "./styles";
+import { useCart } from '../../hooks/useCart'
 
-export function Header() {
-  const { cart } = useCart();
+import { Aside, Container } from './styles'
+
+const Header = () => {
+  const { cart } = useCart()
 
   return (
     <Container>
@@ -19,11 +20,13 @@ export function Header() {
           <span>Porto Alegre, RS</span>
         </div>
 
-        <Link to={`cart`} aria-disabled={cart.length === 0}>
+        <Link to={`cart`}>
           <ShoppingCart size={22} weight="fill" />
-          {cart.length > 0 ? <span>{cart.length}</span> : null}
+          { cart.length > 0 ? <span>{ cart.length }</span> : null }
         </Link>
       </Aside>
     </Container>
-  );
+  )
 }
+
+export { Header }
