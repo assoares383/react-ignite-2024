@@ -1,9 +1,10 @@
 import logoImg from '../../assets/icons/ignite-logo.svg'
-import * as Dialog from '@radix-ui/react-dialog';
 
-import { NewTransactionModal } from '../NewTransactionModal/index';
+import * as Dialog from '@radix-ui/react-dialog'
 
-import { HeaderContainer, HeaderContent, NewTransactionButton } from './styles';
+import { HeaderContainer, HeaderContent, NewTransactionButton } from "./styles"
+
+import { NewTransactionModal } from '../NewTransactionModal'
 
 export const Header = () => {
   return (
@@ -20,5 +21,5 @@ export const Header = () => {
         </Dialog.Root>
       </HeaderContent>
     </HeaderContainer>
-  );
-};
+  )
+}

@@ -1,37 +1,38 @@
-import { createContext, ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from "react";
+import { createContext } from "use-context-selector";
 
-import { api } from '../lib/axios'
+import { api } from "../lib/axios";
 
 interface Transaction {
   id: number;
   description: string;
-  type: 'income' | 'outcome';
+  type: "income" | "outcome";
   price: number;
   category: string;
   createdAt: string;
 }
-
 interface createTransactionInput {
-  description: string,
-  price: number,
-  category: string,
+  description: string
+  price: number
+  category: string
   type: 'income' | 'outcome'
 }
 
 interface TransactionContextType {
-  transactions: Transaction[],
-  fetchTransactions: (query?: string) => Promise<void>,
+  transactions: Transaction[];
+  fetchTransactions: (query?: string) => Promise<void>;
   createTransaction: (data: createTransactionInput) => Promise<void>
 }
 
 interface TransactionsProviderProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const TransactionsContext = createContext({} as TransactionContextType)
 
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
-  const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   async function fetchTransactions(query?: string) {
     const response = await api.get('/transactions', {
@@ -48,7 +49,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   async function createTransaction(data: createTransactionInput) {
     const { description, price, category, type} = data
 
-    const response = await api.post('/transactions', {
+    const response = await api.post('transactions', {
       description,
       category,
       price,
@@ -59,9 +60,10 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     setTransactions(state => [response.data, ...state])
   }
 
+
   useEffect(() => {
-    fetchTransactions()
-  }, [])
+    fetchTransactions();
+  }, []);
 
   return (
     <TransactionsContext.Provider
@@ -73,5 +75,5 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     >
       {children}
     </TransactionsContext.Provider>
-  )
+  );
 }

@@ -33,28 +33,12 @@
       "createdAt": "2024-02-23T21:13:49.060Z"
     },
     {
-      "id": "ed27",
-      "description": "Teste",
-      "category": "Teste",
-      "price": 11111,
-      "type": "outcome",
-      "createdAt": "2024-02-23T21:15:23.554Z"
-    },
-    {
-      "id": "c20d",
-      "description": "Teste dia 24.02.2024",
-      "category": "Teste inclusao",
-      "price": 12900,
-      "type": "outcome",
-      "createdAt": "2024-02-24T13:07:00.734Z"
-    },
-    {
-      "id": "921d",
-      "description": "Teste dia 24.02.2024 1",
-      "category": "113",
-      "price": 323232,
-      "type": "outcome",
-      "createdAt": "2024-02-24T13:26:56.082Z"
+      "id": "2780",
+      "description": "Desenvolvimento de App",
+      "category": "Venda",
+      "price": 10000,
+      "type": "income",
+      "createdAt": "2024-12-26T23:38:28.955Z"
     }
   ]
 }
