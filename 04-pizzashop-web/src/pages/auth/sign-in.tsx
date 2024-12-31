@@ -2,11 +2,13 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { toast } from 'sonner';
+import { useMutation } from "@tanstack/react-query";
 
 import { Button } from "../../components/ui/button";
 import { Label } from "../../components/ui/label";
 import { Input } from "../../components/ui/input";
 import { Link } from "react-router-dom";
+import { signIn } from "../../api/sign-in";
 
 const signInForm = z.object({
   email: z.string().email()
@@ -21,10 +23,14 @@ export function SignIn() {
     formState: { isSubmitting }
    } = useForm<SignInForm>();
 
+   const { mutateAsync: authenticate } = useMutation({
+    mutationFn: signIn,
+   })
+
    const handleSignIn = async (data: SignInForm) => {
     try {
-      console.log(data);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await authenticate({ email: data.email })
+
       toast.success('Enviamos um link de autenticação para o seu email', {
         action: {
           label: 'Reenviar',
