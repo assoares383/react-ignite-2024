@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Button } from "../../components/ui/button";
 import { Label } from "../../components/ui/label";
 import { Input } from "../../components/ui/input";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { signIn } from "../../api/sign-in";
 
 const signInForm = z.object({
@@ -17,11 +17,17 @@ const signInForm = z.object({
 type SignInForm = z.infer<typeof signInForm>
 
 export function SignIn() {
+  const [ searchParams ] = useSearchParams()
+
   const {
     handleSubmit,
     register,
     formState: { isSubmitting }
-   } = useForm<SignInForm>();
+   } = useForm<SignInForm>({
+    defaultValues: {
+      email: searchParams.get('email') ?? ''
+    }
+   });
 
    const { mutateAsync: authenticate } = useMutation({
     mutationFn: signIn,
