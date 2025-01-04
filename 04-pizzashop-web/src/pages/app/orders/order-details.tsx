@@ -20,7 +20,7 @@ import {
   TableRow
 } from "../../../components/ui/table";
 
-import { getOrderDetails } from "../../../api/get-order-detaisl";
+import { getOrderDetails } from "../../../api/get-order-details";
 import { OrderStatus } from "../../../components/order-status";
 export interface OrderDetailsProps {
   orderId: string
