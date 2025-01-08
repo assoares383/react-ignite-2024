@@ -1,6 +1,6 @@
 import { api } from "../lib/axios";
 
-export interface GetDailyRevenueInPeriod {
+export type GetDailyRevenueInPeriod = {
   date: string
   receipt: number
 }[]
