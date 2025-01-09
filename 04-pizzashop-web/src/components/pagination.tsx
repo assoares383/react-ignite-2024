@@ -24,7 +24,7 @@ export function Pagination({
 
       <div className="flex items-center gap-6 lg:gap-8">
         <div className="text-sm font-medium">
-          Pagina {pageIndex + 1} de { pages }
+          Página {pageIndex + 1} de { pages }
         </div>
         <div className="flex items-center gap-2">
           <Button
