@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   Card,
@@ -35,8 +35,20 @@ export function RevenueChart() {
     data: dailyRevenueInPeriod
   } = useQuery({
     queryKey: ['metrics', 'daily-revenue-in-period', dateRange],
-    queryFn: getDailyRevenueInPeriod
+    queryFn: () => getDailyRevenueInPeriod({
+      from: dateRange?.from,
+      to: dateRange?.to
+    })
   })
+
+  const chartData = useMemo(() => {
+    return dailyRevenueInPeriod?.map(chartItem => {
+      return {
+        date: chartItem.date,
+        receipt: chartItem.receipt / 100
+      }
+    })
+  }, [dailyRevenueInPeriod])
 
   return (
     <Card className="col-span-6">
@@ -52,15 +64,15 @@ export function RevenueChart() {
 
         <div className="flex items-center gap-3">
           <Label></Label>
-          <DateRangePicker date={dateRange} onDateChange="setDateRange" />
+          <DateRangePicker date={dateRange} onDateChange={setDateRange} />
         </div>
       </CardHeader>
       <CardContent>
         {
-          dailyRevenueInPeriod && (
+          chartData && (
             <ResponsiveContainer width="100%" height={240}>
               <LineChart
-                data={dailyRevenueInPeriod}
+                data={chartData}
                 style={{ fontSize: 12 }}
               >
                 <XAxis

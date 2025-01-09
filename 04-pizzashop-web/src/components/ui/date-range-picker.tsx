@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Calendar as CalendarIcon } from 'lucide-react'
-import { addDays, format } from "date-fns"
+import { format } from "date-fns"
 import { DateRange } from "react-day-picker"
 
 import { cn } from "../../lib/utils"
@@ -15,7 +15,7 @@ import {
 } from "../../components/ui/popover"
 
 interface DateRangePickerProps extends React.ComponentProps<'div'> {
-  date: DateRange
+  date: DateRange | undefined
   onDateChange: (date:DateRange | undefined) => void
 }
 
