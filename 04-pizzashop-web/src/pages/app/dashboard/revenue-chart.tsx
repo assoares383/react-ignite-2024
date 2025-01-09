@@ -1,5 +1,8 @@
 import { useMemo, useState } from "react";
+import { DateRange } from 'react-day-picker'
 import { useQuery } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
+import { subDays } from "date-fns";
 import {
   Card,
   CardContent,
@@ -7,6 +10,8 @@ import {
   CardHeader,
   CardTitle
 } from "../../../components/ui/card";
+
+import { Label } from "../../../components/ui/label";
 
 import {
   ResponsiveContainer,
@@ -21,9 +26,6 @@ import colors from 'tailwindcss/colors'
 
 import { DateRangePicker } from "../../../components/ui/date-range-picker";
 import { getDailyRevenueInPeriod } from "../../../api/get-daily-revenue-in-period";
-import { Label } from "../../../components/ui/label";
-import { DateRange } from 'react-day-picker'
-import { subDays } from "date-fns";
 
 export function RevenueChart() {
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
@@ -69,7 +71,7 @@ export function RevenueChart() {
       </CardHeader>
       <CardContent>
         {
-          chartData && (
+          chartData ? (
             <ResponsiveContainer width="100%" height={240}>
               <LineChart
                 data={chartData}
@@ -108,6 +110,10 @@ export function RevenueChart() {
                 />
               </LineChart>
             </ResponsiveContainer>
+          ) : (
+            <div className="flex h-[240px] w-full items-center justify-center">
+              <Loader2 className="h-8 text-muted-foreground animate-spin" />
+            </div>
           )
         }
       </CardContent>
