@@ -67,9 +67,6 @@ export function Orders() {
               </TableHeader>
               <TableBody>
                 {
-                  isLoadingOrders && <OrderTableSkeleton />
-                }
-                {
                   result && result.orders.map(order => {
                     return <OrderTableRow key={order.orderId} order={order} />
                   })
@@ -77,7 +74,7 @@ export function Orders() {
               </TableBody>
             </Table>
           </div>
-
+          { isLoadingOrders && <OrderTableSkeleton /> }
           {
             result && (
               <Pagination

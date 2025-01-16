@@ -3,6 +3,7 @@ import { http, HttpResponse } from "msw";
 import type { GetOrdersResponse } from "../get-orders";
 
 type Orders = GetOrdersResponse['orders']
+
 type OrderStatus = GetOrdersResponse['orders'][number]['status']
 
 const statuses: OrderStatus[] = [
@@ -23,7 +24,7 @@ const orders: Orders = Array.from({ length: 60 }).map((_, i) => {
   }
 })
 
-export const getOrdersMock =
+export const GetOrdersMock =
   http.get<never, never, GetOrdersResponse>('/orders', async ({ request }) => {
     const { searchParams } = new URL(request.url)
 
