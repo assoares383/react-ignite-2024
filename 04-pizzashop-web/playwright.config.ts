@@ -1,7 +1,8 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './test_playwright',
+  testMatch: /.*\.e2e-spec\.ts$/,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
@@ -11,7 +12,7 @@ export default defineConfig({
     baseURL: 'http://localhost:7610',
   },
   webServer: {
-    command: 'npm run start',
+    command: 'pnpm dev:test',
     url: 'http://localhost:7610',
     reuseExistingServer: !process.env.CI,
   },
