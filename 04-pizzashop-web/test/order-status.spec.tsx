@@ -1,7 +1,8 @@
+import React from 'react'
 import { describe, expect, it } from 'vitest'
 import { render } from '@testing-library/react'
 
-import { OrderStatus } from '../components/order-status'
+import { OrderStatus } from '../src/components/order-status'
 
 
 describe('Order Status', () => {

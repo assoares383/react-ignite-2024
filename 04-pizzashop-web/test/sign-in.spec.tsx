@@ -1,11 +1,12 @@
+import React from "react";
 import { describe, expect, it } from "vitest";
 import { render } from '@testing-library/react'
 
 import { MemoryRouter } from "react-router-dom";
-import { queryClient } from "../lib/react-query";
+import { queryClient } from "../src/lib/react-query";
 import { HelmetProvider } from "react-helmet-async";
 
-import { SignIn } from '../pages/auth/sign-in';
+import { SignIn } from '../src/pages/auth/sign-in';
 import { QueryClientProvider } from "@tanstack/react-query";
 
 describe('SignIn', () => {

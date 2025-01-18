@@ -1,8 +1,9 @@
+import React from "react";
 import { render } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { Pagination } from "../components/pagination";
+import { Pagination } from "../src/components/pagination";
 
 const onPageChangeCallback = vi.fn()
 

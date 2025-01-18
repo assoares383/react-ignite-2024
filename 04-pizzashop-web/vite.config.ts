@@ -10,7 +10,7 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    setupFiles: ['./src/test/setup.ts'],
+    setupFiles: ['./test/setup.ts'],
     environment: 'happy-dom'
   },
 })
