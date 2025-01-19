@@ -13,18 +13,26 @@ test('sign up successfully', async ({ page }) => {
   const toast = page.getByText('Restaurante cadastrado com sucesso')
 
   expect(toast).toBeVisible()
+
+  await page.waitForTimeout(2000)
 });
 
-// test('sign in with wrong credentiaals', async ({ page }) => {
-//   await page.goto('/sign-in', { waitUntil: 'networkidle' })
+test('sign up with error', async ({ page }) => {
+  await page.goto('/sign-up', { waitUntil: 'networkidle' })
 
-//   await page.getByLabel('Seu e-mail').fill('wrong@example.com')
-//   await page.getByRole('button', { name: 'Acessar painel' }).click()
+  await page.getByLabel('Nome do estabelecimento').fill('Invalid Name')
+  await page.getByLabel('Seu nome').fill('John Doe')
+  await page.getByLabel('Seu e-mail').fill('johndoe@example.com')
+  await page.getByLabel('Seu celular').fill('1234567890')
 
-//   const toast = page.getByText('Credenciais invalidas.')
+  await page.getByRole('button', { name: 'Finalizar cadastro' }).click()
 
-//   expect(toast).toBeVisible()
-// });
+  const toast = page.getByText('Erro ao cadastrar restaurante.')
+
+  expect(toast).toBeVisible()
+
+  await page.waitForTimeout(2000)
+});
 
 test('navigate to new login page', async ({ page }) => {
   await page.goto('/sign-up', { waitUntil: 'networkidle' })
