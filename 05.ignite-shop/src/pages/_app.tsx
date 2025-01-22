@@ -1,5 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
+
 import type { AppProps } from "next/app";
+import Image from "next/image";
 import { globalStyles } from "@/styles/global";
 
 import LogoImg from '../assets/logo.svg'
@@ -12,7 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Container>
       <Header>
-        <img src={LogoImg.src} alt="" />
+        <Image src={LogoImg} alt="" />
       </Header>
 
       <Component {...pageProps} />
