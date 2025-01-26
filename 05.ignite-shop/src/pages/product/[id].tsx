@@ -1,13 +1,12 @@
-import { useRouter } from 'next/router';
-
 import { ImageContainer, ProductContainer } from '@/styles/pages/product';
 import Image from 'next/image';
+import Stripe from 'stripe';
 
-import Camiseta1 from '../../assets/camiseta1.jpg';
+import { useRouter } from 'next/router';
+
 import { ProductDetails } from '../../styles/pages/product';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import stripe from '../../lib/stripe';
-import Stripe from 'stripe';
+import { stripe } from '../../lib/stripe';
 
 interface ProductProps {
   product: {
@@ -20,6 +19,12 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
+  const { isFallback } = useRouter()
+
+  if (isFallback) {
+    return <h1>Loading...</h1>
+  }
+
   return (
     <ProductContainer>
       <ImageContainer>
@@ -42,13 +47,20 @@ export default function Product({ product }: ProductProps) {
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [
-      { paths: { id: ''}}
+      { params: { id: 'prod_RdovOZ0vL2RCuL' }}
     ],
-    fallback: false
+    fallback: true
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ params }) => {
+  if (!params) {
+    return {
+      notFound: true,
+    };
+  }
+
   const productId = params.id;
 
   const product = await stripe.products.retrieve(productId, {
