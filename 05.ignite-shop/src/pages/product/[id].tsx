@@ -28,7 +28,7 @@ export default function Product({ product }: ProductProps) {
   return (
     <ProductContainer>
       <ImageContainer>
-        <Image src={product.imageUrl} alt='' />
+        <Image src={product.imageUrl} width={520} height={480} alt="" />
       </ImageContainer>
       <ProductDetails>
         <h1>{product.name}</h1>
@@ -47,7 +47,7 @@ export default function Product({ product }: ProductProps) {
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [
-      { params: { id: 'prod_RdovOZ0vL2RCuL' }}
+      { params: { id: '' }}
     ],
     fallback: true
   }
