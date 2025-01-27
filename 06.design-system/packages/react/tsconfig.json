@@ -1,0 +1,7 @@
+{
+  "extends": "@asstech-ui/ts-config/react.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM"]
+  }
+}
