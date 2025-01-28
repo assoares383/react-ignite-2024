@@ -1,5 +1,6 @@
 {
   "extends": [
+    "@asstech-ui/eslint-config",
     "next/core-web-vitals",
     "next/typescript",
     "plugin:storybook/recommended"
