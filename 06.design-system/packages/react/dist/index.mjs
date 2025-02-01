@@ -355,6 +355,49 @@ var Text = styled("p", {
   }
 });
 
+// src/components/MultiStep/styles.ts
+var MultiStepContainer = styled("div", {});
+var Label = styled(Text, {
+  color: "$gray200",
+  defaultVariants: {
+    size: "xs"
+  }
+});
+var Steps = styled("div", {
+  display: "grid",
+  gridTemplateColumns: "repeat(var(--steps-size), 1fr)",
+  gap: "$2",
+  marginTop: "$1"
+});
+var Step = styled("div", {
+  height: "$1",
+  borderRadius: "$px",
+  backgroundColor: "$gray600",
+  variants: {
+    active: {
+      true: {
+        backgroundColor: "$gray100"
+      }
+    }
+  }
+});
+
+// src/components/MultiStep/index.tsx
+import { jsx as jsx3, jsxs as jsxs2 } from "react/jsx-runtime";
+function MultiStep({ size, currentStep = 1 }) {
+  return /* @__PURE__ */ jsxs2(MultiStepContainer, { children: [
+    /* @__PURE__ */ jsxs2(Label, { children: [
+      "Passo ",
+      currentStep,
+      " de ",
+      size
+    ] }),
+    /* @__PURE__ */ jsx3(Steps, { css: { "--steps-size": size }, children: Array.from({ length: size }, (_, i) => i + 1).map((step) => {
+      return /* @__PURE__ */ jsx3(Step, { active: currentStep >= step }, step);
+    }) })
+  ] });
+}
+
 // src/components/TextArea.tsx
 var TextArea = styled("textarea", {
   backgroundColor: "$gray900",
@@ -424,12 +467,12 @@ var Input = styled("input", {
 });
 
 // src/components/TextInput/index.tsx
-import { jsx as jsx3, jsxs as jsxs2 } from "react/jsx-runtime";
+import { jsx as jsx4, jsxs as jsxs3 } from "react/jsx-runtime";
 function TextInput(_a) {
   var _b = _a, { prefix } = _b, props = __objRest(_b, ["prefix"]);
-  return /* @__PURE__ */ jsxs2(TextInputContainer, { children: [
-    !!prefix && /* @__PURE__ */ jsx3(Prefix, { children: prefix }),
-    /* @__PURE__ */ jsx3(Input, __spreadValues({}, props))
+  return /* @__PURE__ */ jsxs3(TextInputContainer, { children: [
+    !!prefix && /* @__PURE__ */ jsx4(Prefix, { children: prefix }),
+    /* @__PURE__ */ jsx4(Input, __spreadValues({}, props))
   ] });
 }
 export {
@@ -438,6 +481,7 @@ export {
   Button,
   Checkbox2 as Checkbox,
   Heading,
+  MultiStep,
   Text,
   TextArea,
   TextInput
