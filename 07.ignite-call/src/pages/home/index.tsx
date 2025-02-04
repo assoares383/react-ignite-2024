@@ -1,6 +1,9 @@
-import { Button, Heading, Text } from "@ignite-ui/react";
+import { Heading, Text } from "@ignite-ui/react";
 import Image from "next/image";
+
 import { Container, Hero, Preview } from "./styles";
+
+import { ClaimUsernameForm } from './components/ClaimUsernameForm'
 
 import previewImage from '@/assets/app-preview.png'
 
@@ -10,9 +13,8 @@ export default function Home() {
       <Hero>
         <Heading size="4xl">Agendamento descomplicado</Heading>
         <Text size="xl">Conecte seu calendário e permita que as pessoas marquem agendamentos no seu tempo livre.</Text>
-        <Button>
-            Criar conta com Google
-        </Button>
+        
+        <ClaimUsernameForm />
       </Hero>
       <Preview>
         <Image 
