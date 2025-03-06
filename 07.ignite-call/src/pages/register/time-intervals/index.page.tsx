@@ -1,0 +1,93 @@
+import {
+  Button,
+  Checkbox,
+  Heading,
+  MultiStep,
+  Text,
+  TextInput,
+} from "@ignite-ui/react";
+
+import { ArrowRight } from "phosphor-react";
+import {
+  Container,
+  Header,
+  IntervalBox,
+  IntervalDay,
+  IntervalInputs,
+  IntervalItem,
+  IntervalsContainer,
+} from "./styles";
+
+export default function TimeIntervals() {
+  return (
+    <Container>
+      <Header>
+        <Heading>Quase lá</Heading>
+        <Text>
+          Defina o intervvalo de horários que você está disponível em cada dia
+          da semana.
+        </Text>
+
+        <MultiStep size={4} currentStep={3} />
+      </Header>
+
+      <IntervalBox as="form">
+        <IntervalsContainer>
+          <IntervalItem>
+            <IntervalDay>
+              <Checkbox />
+              <Text>Segunda-feira</Text>
+            </IntervalDay>
+            <IntervalInputs>
+              <TextInput
+                size="sm"
+                type="time"
+                step={60}
+                onPointerEnterCapture={undefined}
+                onPointerLeaveCapture={undefined}
+                crossOrigin={undefined}
+              />
+              <TextInput
+                size="sm"
+                type="time"
+                step={60}
+                onPointerEnterCapture={undefined}
+                onPointerLeaveCapture={undefined}
+                crossOrigin={undefined}
+              />
+            </IntervalInputs>
+          </IntervalItem>
+          <IntervalItem>
+            <IntervalDay>
+              <Checkbox />
+              <Text>Terca-feira</Text>
+            </IntervalDay>
+            <IntervalInputs>
+              <TextInput
+                size="sm"
+                type="time"
+                step={60}
+                onPointerEnterCapture={undefined}
+                onPointerLeaveCapture={undefined}
+                crossOrigin={undefined}
+              />
+              <TextInput
+                size="sm"
+                type="time"
+                step={60}
+                onPointerEnterCapture={undefined}
+                onPointerLeaveCapture={undefined}
+                crossOrigin={undefined}
+              />
+            </IntervalInputs>
+          </IntervalItem>
+        </IntervalsContainer>
+
+        <Button type="submit">
+          Proximo passo
+          <ArrowRight />
+        </Button>
+      </IntervalBox>
+    </Container>
+  );
+}
