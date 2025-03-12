@@ -7,13 +7,13 @@ import {
   TextInput,
 } from "@ignite-ui/react";
 
-import { api } from "@/lib/axios";
 import { convertTimeStringToMinutes } from "@/utils/convert-time-string-to-minutes";
 import { getWeeksDays } from "@/utils/get-week-days";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight } from "phosphor-react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
+import { api } from "../../../lib/axios";
 
 import {
   Container,
