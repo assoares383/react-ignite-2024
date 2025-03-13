@@ -5,5 +5,7 @@ export const Container = styled(Box, {
   padding: 0,
   display: 'grid',
   maxWidth: '100%',
-  position: 'relative'
+  position: 'relative',
+  width: 480,
+  gridTemplateColumns: '1fr',
 })
